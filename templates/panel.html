@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trading Panel - Tastytrade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6">
+        <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">📈 Tastytrade Control Panel</h1>
+
+        <div class="flex flex-col md:flex-row justify-center gap-4 mb-6">
+            <form method="POST" action="/ejecutar">
+                <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-xl w-full">
+                    ▶️ Ejecutar Modelo
+                </button>
+            </form>
+            <form method="POST" action="/detener">
+                <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-xl w-full">
+                    ⛔ Detener Modelo
+                </button>
+            </form>
+        </div>
+
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold mb-2 text-gray-700">📋 Estado del Modelo</h2>
+            <div class="bg-gray-100 border rounded-xl p-4 shadow text-sm text-gray-800">
+                {{ status_text }}
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-xl font-semibold mb-2 text-gray-700">📑 Órdenes Ejecutadas</h2>
+            <div class="overflow-x-auto">
+                <table class="table-auto w-full text-left text-sm border-collapse border border-gray-300">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="px-4 py-2 border">#</th>
+                            <th class="px-4 py-2 border">Ticker</th>
+                            <th class="px-4 py-2 border">Tipo</th>
+                            <th class="px-4 py-2 border">Fecha</th>
+                            <th class="px-4 py-2 border">Resultado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for orden in ordenes %}
+                        <tr class="{% cycle 'bg-white', 'bg-gray-50' %}">
+                            <td class="px-4 py-2 border">{{ loop.index }}</td>
+                            <td class="px-4 py-2 border">{{ orden.ticker }}</td>
+                            <td class="px-4 py-2 border">{{ orden.tipo }}</td>
+                            <td class="px-4 py-2 border">{{ orden.fecha }}</td>
+                            <td class="px-4 py-2 border">{{ orden.resultado }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
